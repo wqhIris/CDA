@@ -1,0 +1,11 @@
+tensorboardX
+tensorboard
+scikit-image
+timm
+einops
+medpy
+nibabel
+openpyxl
+dill
+albumentations
+pandas
