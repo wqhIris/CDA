@@ -59,7 +59,7 @@ $ROOT/exps_on_COVID19-20/data/
 ```
 
 - SCGM
-  - We followed the settings of [EPL](https://github.com/XMed-Lab/EPL_SemiDG) and the original dataset can be download from the [official website](http://niftyweb.cs.ucl.ac.uk/challenge/index.php).
+  - We followed the settings of [EPL](https://github.com/XMed-Lab/EPL_SemiDG) and the original dataset can be downloaded from the [official website](http://niftyweb.cs.ucl.ac.uk/challenge/index.php).
   - Extract the training and testing data to `$ROOT/exps_on_SCGM/data/scgm_rawdata/train` and `$ROOT/exps_on_SCGM/data/scgm_rawdata/test`, respectively.
   - You need first to change the dirs (lines 32 to 53) in the scripts [exps_on_SCGM/data/preprocess/save_SCGM_2D.py](exps_on_SCGM/data/preprocess/save_SCGM_2D.py), and then run `save_SCGM_2D.py` to split the original dataset into labeled and unlabeled sets in four domains.
   - The directory structure should look like as follows:
@@ -79,20 +79,44 @@ $ROOT/exps_on_SCGM/data/
 │       ├── Labeled/ (Labeled masks in four domains)
 ```
 
-
-
-
 # How to run
 ## 1. Training
 - For experiments on COVID-19-20
-  - To 
+  - To train the `Baseline`, `BCP`, and our `CDA` with 10%, 20%, 30% with labeled ratios, please refer to [exps_on_COVID19-20/code/main.sh](exps_on_COVID19-20/code/main.sh)
+```bash
+python extract_tumors.py
+
+CUDA_VISIBLE_DEVICES=0 python train_baseline_tumorcptransV2.py \
+--root_path /root/autodl-fs/ \
+--tumor_dir /root/autodl-fs/data/COVID249/tumor_0.1/ \
+--dataroot_path /root/autodl-fs/ \
+--excel_file_name_label train_0.1_l.xlsx \
+--excel_file_name_unlabel train_0.1_u.xlsx \
+--exp baseline_tumorcp_transform_blur \
+--labeled_per 0.1
+
+CUDA_VISIBLE_DEVICES=0 python train_CDA.py \
+--root_path /root/autodl-fs/CDA-main/exps_on_COVID19-20 \
+--tumor_dir /root/autodl-fs/data/COVID249/tumor_0.1/ \
+--reload_path /root/autodl-fs/exp/COVID249/exp_baseline_tumorcp_transform_blur_0.1_unet/model_best.pth \
+--dataroot_path /root/autodl-fs/ \
+--excel_file_name_label train_0.1_l.xlsx \
+--excel_file_name_unlabel train_0.1_u.xlsx \
+--exp CDA \
+--model unet_imgcut_feaaugmixup \
+--labeled_per 0.1
+```
 
 - For experiments on SCGM
+  - To train the `EPL` with 20% labeled ratios in four domains, please refer to the bash scripts in `exps_on_SCGM/code/EPL`
+
+  - To train our `CDA` with same , please refer to the bash scripts in `exps_on_SCGM/code/CDA` 
 
 ## 2. Testing
-- For COVID-19-20,
-
-- For SCGM,
+- For experiments on COVID-19-20
+  - To run the evaluation code, please refer to [exps_on_COVID19-20/code/main.sh](exps_on_COVID19-20/code/main.sh)
+- For experiments on SCGM
+  - To evaluate `EPL`  
 
 # Acknowledgement
 This repository is based on the codes and datasets provided by the projects: [SASSL](https://github.com/FeiLyu/SASSL/) and [EPL](https://github.com/XMed-Lab/EPL_SemiDG).
