@@ -29,28 +29,28 @@ def save_mask_np(mask1, mask2, path, name):
     mask = np.concatenate((mask1.reshape(h,w,1), mask2.reshape(h,w,1)), axis=2)
     np.savez_compressed(os.path.join(path, name), mask)
 
-path_train = '/root/autodl-tmp/scgm_rawdata/train/' #!!!'/home/s1575424/xiao/Year2/scgm_rawdata/train/'  #!!!path of raw data
-past_test = '/root/autodl-tmp/scgm_rawdata/test/' #!!!'/home/s1575424/xiao/Year2/scgm_rawdata/test/'   #!!!path of raw data
+path_train = '/root/autodl-tmp/exps_on_SCGM/data/scgm_rawdata/train/' #!!!'/home/s1575424/xiao/Year2/scgm_rawdata/train/'
+past_test = '/root/autodl-tmp/exps_on_SCGM/data/scgm_rawdata/test/' #!!!'/home/s1575424/xiao/Year2/scgm_rawdata/test/'
 
 ######################################################################################################
 
 # Save data dirs
-LabeledVendorA_data_dir = '/root/autodl-tmp/scgm/scgm_split_2D_data/Labeled/vendorA/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_data/Labeled/vendorA/'
-LabeledVendorA_mask_dir = '/root/autodl-tmp/scgm/scgm_split_2D_mask/Labeled/vendorA/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_mask/Labeled/vendorA/'
+LabeledVendorA_data_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_data/Labeled/vendorA/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_data/Labeled/vendorA/'
+LabeledVendorA_mask_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_mask/Labeled/vendorA/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_mask/Labeled/vendorA/'
 
-LabeledVendorB_data_dir = '/root/autodl-tmp/scgm/scgm_split_2D_data/Labeled/vendorB/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_data/Labeled/vendorB/'
-LabeledVendorB_mask_dir = '/root/autodl-tmp/scgm/scgm_split_2D_mask/Labeled/vendorB/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_mask/Labeled/vendorB/'
+LabeledVendorB_data_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_data/Labeled/vendorB/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_data/Labeled/vendorB/'
+LabeledVendorB_mask_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_mask/Labeled/vendorB/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_mask/Labeled/vendorB/'
 
-LabeledVendorC_data_dir = '/root/autodl-tmp/scgm/scgm_split_2D_data/Labeled/vendorC/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_data/Labeled/vendorC/'
-LabeledVendorC_mask_dir = '/root/autodl-tmp/scgm/scgm_split_2D_mask/Labeled/vendorC/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_mask/Labeled/vendorC/'
+LabeledVendorC_data_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_data/Labeled/vendorC/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_data/Labeled/vendorC/'
+LabeledVendorC_mask_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_mask/Labeled/vendorC/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_mask/Labeled/vendorC/'
 
-LabeledVendorD_data_dir = '/root/autodl-tmp/scgm/scgm_split_2D_data/Labeled/vendorD/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_data/Labeled/vendorD/'
-LabeledVendorD_mask_dir = '/root/autodl-tmp/scgm/scgm_split_2D_mask/Labeled/vendorD/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_mask/Labeled/vendorD/'
+LabeledVendorD_data_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_data/Labeled/vendorD/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_data/Labeled/vendorD/'
+LabeledVendorD_mask_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_mask/Labeled/vendorD/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_mask/Labeled/vendorD/'
 
-UnlabeledVendorA_data_dir = '/root/autodl-tmp/scgm/scgm_split_2D_data/Unlabeled/vendorA/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_data/Unlabeled/vendorA/'
-UnlabeledVendorB_data_dir = '/root/autodl-tmp/scgm/scgm_split_2D_data/Unlabeled/vendorB/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_data/Unlabeled/vendorB/'
-UnlabeledVendorC_data_dir = '/root/autodl-tmp/scgm/scgm_split_2D_data/Unlabeled/vendorC/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_data/Unlabeled/vendorC/'
-UnlabeledVendorD_data_dir = '/root/autodl-tmp/scgm/scgm_split_2D_data/Unlabeled/vendorD/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_data/Unlabeled/vendorD/'
+UnlabeledVendorA_data_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_data/Unlabeled/vendorA/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_data/Unlabeled/vendorA/'
+UnlabeledVendorB_data_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_data/Unlabeled/vendorB/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_data/Unlabeled/vendorB/'
+UnlabeledVendorC_data_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_data/Unlabeled/vendorC/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_data/Unlabeled/vendorC/'
+UnlabeledVendorD_data_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_data/Unlabeled/vendorD/' #!!!'/home/s1575424/xiao/Year2/scgm_split_2D_data/Unlabeled/vendorD/'
 
 labeled_data_dir = [LabeledVendorA_data_dir, LabeledVendorB_data_dir, LabeledVendorC_data_dir, LabeledVendorD_data_dir]
 labeled_mask_dir = [LabeledVendorA_mask_dir, LabeledVendorB_mask_dir, LabeledVendorC_mask_dir, LabeledVendorD_mask_dir]
