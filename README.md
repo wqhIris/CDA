@@ -8,10 +8,41 @@ Medical image semantic segmentation is a fundamental yet challenging research ta
 <img src="https://raw.githubusercontent.com/wqhIris/CDA/master/framework.png" width="482" height="343" alt="framework">
 
 # How to install
-## 1. Data preparation
+## 1. Environment configuration
+- We recommend installing the environment through conda and pip
+- For experiments on COVID-19-20 dataset
+```bash
+cd CDA-main/exps_on_COVID19-20/code/
+
+# Create a conda environment (python version >= 3.8)
+conda create -n covid python=3.8
+
+# Activate the environment
+conda activate covid
+
+# Install torch (torch version >= 1.11.0, cuda version >= 1.13) and torchvision
+# Please refer to https://pytorch.org/ if you need a different cuda version
+pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+- For experiments on SCGM dataset
+```bash
+cd CDA-main/exps_on_SCGM/code/
+
+# Install dependencies and conda environment 
+conda env create -f semi_dg_cda.yaml
+
+# Activate the environment
+conda activate semidg_cda
+```
+
+## 2. Data preparation
 - COVID-19-20 
   - We followed the settings of [SASSL](https://github.com/FeiLyu/SASSL/) and the pre-processed dataset can be downloaded from the [link](https://drive.google.com/file/d/1A2f3RRblSByFncUlf5MEr9VEjFlqD0ge/view?usp=sharing).
-  - Extract the sets to $ROOT/exps_on_COVID19-20/data. The directory structure should look like as follows:
+  - Extract the sets to `$ROOT/exps_on_COVID19-20/data`. The directory structure should look like as follows:
 ```bash
 $ROOT/exps_on_COVID19-20/data/
 ├── COVID249/
@@ -30,7 +61,7 @@ $ROOT/exps_on_COVID19-20/data/
 - SCGM
   - We followed the settings of [EPL](https://github.com/XMed-Lab/EPL_SemiDG) and the original dataset can be download from the [official website](http://niftyweb.cs.ucl.ac.uk/challenge/index.php).
   - Extract the training and testing data to `$ROOT/exps_on_SCGM/data/scgm_rawdata/train` and `$ROOT/exps_on_SCGM/data/scgm_rawdata/test`, respectively.
-  - You need first to change the dirs (lines 32 to 53) in the scripts `exps_on_SCGM/data/preprocess/save_SCGM_2D.py`, and then run `save_SCGM_2D.py` to split the original dataset into labeled and unlabeled sets in four domains.
+  - You need first to change the dirs (lines 32 to 53) in the scripts [exps_on_SCGM/data/preprocess/save_SCGM_2D.py](exps_on_SCGM/data/preprocess/save_SCGM_2D.py), and then run `save_SCGM_2D.py` to split the original dataset into labeled and unlabeled sets in four domains.
   - The directory structure should look like as follows:
 ```bash
 $ROOT/exps_on_SCGM/data/
@@ -49,35 +80,14 @@ $ROOT/exps_on_SCGM/data/
 ```
 
 
-## 2. Environment configuration
-- For experiments on COVID-19-20
-  - We recommend installing the environment through conda and pip, and making a new environment with `python>=3.8` `PyTorch>=1.11.0` `Cuda>=11.3`
-```bash
-cd CDA-main/exps_on_COVID19-20/code/
 
-# Create a conda environment
-conda create -n covid python=3.8
-
-# Activate the environment
-conda activate covid
-
-# Install torch (version >= 1.11.0) and torchvision
-# Please refer to https://pytorch.org/ if you need a different cuda version
-pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
-
-# Install dependencies
-pip install -r requirements.txt
-  ```
-
-- For experiments on SCGM
-  ```bash
-  ```
 
 # How to run
 ## 1. Training
-- For COVID-19-20,
+- For experiments on COVID-19-20
+  - To 
 
-- For SCGM,
+- For experiments on SCGM
 
 ## 2. Testing
 - For COVID-19-20,
