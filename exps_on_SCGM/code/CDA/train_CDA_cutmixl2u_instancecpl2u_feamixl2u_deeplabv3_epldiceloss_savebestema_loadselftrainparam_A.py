@@ -335,30 +335,15 @@ def train(label_loader, unlabel_loader_0, unlabel_loader_1, test_loader, val_loa
         
         # ---------- Validation ----------
         val_loss1, val_dice1 = test(model1, val_loader)
-        val_loss1_ema, val_dice1_ema = test(teacher_model, val_loader)
         print(
-            f"[ Valid | {epoch + 1:03d}/{num_epoch:03d} ] val_loss1 = {val_loss1:.5f} val_dice1 = {val_dice1:.5f} val_loss1_ema = {val_loss1_ema:.5f} val_dice1_ema = {val_dice1_ema:.5f}")
-
-        # ---------- Testing (using ensemble)----------
-        test_loss1, test_dice1= test(model1, test_loader)
-        test_loss1_ema, test_dice1_ema= test(teacher_model, test_loader)
-        print(
-            f"[ Test | {epoch + 1:03d}/{num_epoch:03d} ] test_loss1 = {test_loss1:.5f} test_dice1 = {test_dice1:.5f} test_loss1_ema = {test_loss1_ema:.5f} test_dice1_ema = {test_dice1_ema:.5f}")
+            f"[ Valid | {epoch + 1:03d}/{num_epoch:03d} ] val_loss1 = {val_loss1:.5f} val_dice1 = {val_dice1:.5f}")
         
         # val
         text = {'val/val_dice1': val_dice1}
         print(text)
-        text = {'val/val_dice1_ema': val_dice1_ema}
-        print(text)
-        # test
-        text = {'test/test_dice1': test_dice1}
-        print(text)
-        text = {'test/test_dice1_ema': test_dice1_ema}
-        print(text)
         # loss
         text = {'epoch': epoch + 1, 'loss/epoch_loss': epoch_loss, 'loss/epoch_loss_l': epoch_loss_labeled, #!!!'loss/epoch_loss_u': epoch_loss_pseudo,
-                   'loss/test_loss1': test_loss1, 'loss/val_loss1': val_loss1,
-                   'loss/test_loss1_ema': test_loss1_ema, 'loss/val_loss1_ema': val_loss1_ema}
+                   'loss/val_loss1': val_loss1}
         print(text)
 
         # if the model improves, save a checkpoint at this epoch
@@ -368,24 +353,6 @@ def train(label_loader, unlabel_loader_0, unlabel_loader_1, test_loader, val_loa
             print('saving model with best_dice {:.5f}'.format(best_dice))
             model_name = savedir + 'stu_'+ model_path
             torch.save(model1.module, model_name)
-        if val_dice1_ema > best_dice_ema:
-            best_dice_ema = val_dice1_ema
-            # 使用了多GPU需要加上module
-            print('saving model with best_dice {:.5f}'.format(best_dice_ema))
-            model_name = savedir + 'tea_'+ model_path
-            torch.save(teacher_model.module, model_name)
-        if test_dice1 > best_dice_test:
-            best_dice_test = test_dice1
-            # 使用了多GPU需要加上module
-            print('saving model with best_dice {:.5f}'.format(best_dice_test))
-            model_name = savedir + 'stu_test_'+ model_path
-            torch.save(model1.module, model_name)
-        if test_dice1_ema > best_dice_test_ema:
-            best_dice_test_ema = test_dice1_ema
-            # 使用了多GPU需要加上module
-            print('saving model with best_dice {:.5f}'.format(best_dice_test_ema))
-            model_name = savedir + 'tea_test_'+ model_path
-            torch.save(teacher_model.module, model_name)
             
                         
         writer.add_scalar('lr', optimizer1.param_groups[0]['lr'], iter_num)
@@ -393,11 +360,7 @@ def train(label_loader, unlabel_loader_0, unlabel_loader_1, test_loader, val_loa
         writer.add_scalar('loss/epoch_loss_l', epoch_loss_labeled, iter_num)
         #!!!writer.add_scalar('loss/epoch_loss_u', epoch_loss_pseudo, iter_num)
         writer.add_scalar('loss/val_loss1', val_loss1, iter_num)
-        writer.add_scalar('loss/test_loss1', test_loss1, iter_num)
         writer.add_scalar('loss/val_dice1', val_dice1, iter_num)
-        writer.add_scalar('loss/test_dice1', test_dice1, iter_num)
-        writer.add_scalar('loss/val_dice1_ema', val_dice1_ema, iter_num)
-        writer.add_scalar('loss/test_dice1_ema', test_dice1_ema, iter_num)
             
     writer.close()
 

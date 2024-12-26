@@ -7,10 +7,6 @@ import segmentation_models_pytorch as smp
 import sys
 sys.path.append("..")
 
-#!!!
-from networks.unet2d import UNet2D #!!!
-#!!!
-
 # Specify the graphics card
 # torch.cuda.set_device(7)
 
@@ -86,18 +82,6 @@ def my_net(modelname, default_config):
                 in_channels=1,
                 default_config = default_config) #!!!)
             init_weight(model.business_layer,
-                        nn.init.kaiming_normal_,
-                        nn.BatchNorm2d,
-                        bn_eps=default_config['bn_eps'],
-                        bn_momentum=default_config['bn_momentum'],
-                        mode='fan_in', nonlinearity='relu')
-    elif modelname == 'unet':
-        print('Using Unet***')
-        model = UNet2D(
-            n_channels = 1,
-            n_classes=2,
-        )
-        init_weight(model,
                         nn.init.kaiming_normal_,
                         nn.BatchNorm2d,
                         bn_eps=default_config['bn_eps'],

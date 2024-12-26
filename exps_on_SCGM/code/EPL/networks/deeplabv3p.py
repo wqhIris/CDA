@@ -12,11 +12,6 @@ import sys
 sys.path.append("..") 
 #!!!from config import default_config
 
-#!!!
-#!!!added by myself
-from utils.large_margin_loss import LargeMarginLoss
-#!!!
-
 # Specify the graphics card
 # torch.cuda.set_device(7)
 
@@ -56,23 +51,10 @@ class SingleNetwork(nn.Module):
         self.l2norm = Normalize(2)
         self.maxpool= nn.MaxPool2d(18, stride=1)
         
-        #!!!
-        self.criterion_margin = LargeMarginLoss(10000, top_k=1, loss_type='avg_top_k', reduce='none')#!!!100, top_k=1, loss_type='avg_top_k', reduce='none') #!!!10, top_k=1, loss_type='avg_top_k', reduce='none')
-        #!!!
-        
 
-    #!!!def forward(self, data):
-    def forward(self, data, need_feamix=False, lambda1=None, needmarginloss=False, gt=None):
+    def forward(self, data):
         blocks = self.backbone(data)
 
-        if need_feamix:
-            v3plus_feature = self.head(blocks, need_feamix, lambda1)      # (b, c, h, w)        
-            pred = self.classifier(v3plus_feature)
-            b, c, h, w = data.shape
-            pred = F.interpolate(pred, size=(h, w), mode='bilinear', align_corners=True)
-            
-            return pred  
-            
 
         v3plus_feature = self.head(blocks)      # (b, c, h, w)        
         
@@ -86,12 +68,6 @@ class SingleNetwork(nn.Module):
         # print(self.training)
         # if self.training:
         #     return v3plus_feature, pred
-        
-        #!!!---------
-        if needmarginloss:
-            loss = self.criterion_margin(pred, gt, [v3plus_feature])
-            return pred, loss
-        #!!!---------
 
         # modified by xmli
         global_feature = blocks[-1]
@@ -208,7 +184,6 @@ class Head(nn.Module):
                                        nn.ReLU(),
                                        )
 
-    '''
     def forward(self, f_list):
         f = f_list[-1]
         f = self.aspp(f)
@@ -222,34 +197,7 @@ class Head(nn.Module):
         f = self.last_conv(f)
 
         return f
-    '''
     
-    def forward(self, f_list, need_feamix=False, lambda1=None):
-        f = f_list[-1]
-        f = self.aspp(f)
-
-        low_level_features = f_list[0]
-        low_h, low_w = low_level_features.size(2), low_level_features.size(3)
-        low_level_features = self.reduce(low_level_features)
-
-        f = F.interpolate(f, size=(low_h, low_w), mode='bilinear', align_corners=True)
-        
-        if need_feamix:
-            low_l,low_u = low_level_features.chunk(2)
-            f_l,f_u = f.chunk(2)
-            
-            assert lambda1 is not None
-            low_mix = low_l*lambda1 + low_u*(1.0-lambda1)
-            f_mix = f_l*lambda1 + f_u*(1.0-lambda1)
-            f=torch.cat((f,f_mix),dim=0)
-            low=torch.cat((low_level_features,low_mix),dim=0)
-            f = torch.cat((f, low), dim=1)
-            f = self.last_conv(f)
-            return f
-        f = torch.cat((f, low_level_features), dim=1)
-        f = self.last_conv(f)
-
-        return f
 
 
 def __init_weight(feature, conv_init, norm_layer, bn_eps, bn_momentum,

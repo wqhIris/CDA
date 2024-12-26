@@ -6,7 +6,7 @@ default_config = dict(
     batch_size=8, #!!!8, #!!!16, #!!!4, #!!!8, #!!!32,
     num_epoch=50,
     learning_rate=0.001, #!!!0.01, #!!!0.001, #!!!5e-5, #!!!1e-4,            # learning rate of Adam
-    weight_decay=0.01, #!!!0.1, #!!!0.001, #!!!0.01, #!!!0.0001, #!!!0.01, #!!!0.1, #!!!0.01,             # weight decay 
+    weight_decay=0.001, #!!!0.1, #!!!0.001, #!!!0.01, #!!!0.0001, #!!!0.01, #!!!0.1, #!!!0.01,             # weight decay 
     num_workers=8,
 
     train_name = name,

@@ -22,24 +22,24 @@ from albumentations.pytorch import ToTensorV2
 
 from utils.utils import im_convert
 from utils.data_utils import colorful_spectrum_mix, fourier_transform, save_image
-from config import default_config
+#!!from config import default_config
 
-LabeledVendorA_data_dir = '/root/autodl-tmp/scgm/scgm_split_2D_data/Labeled/vendorA/' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/data/Labeled/vendorA/'
-LabeledVendorA_mask_dir = '/root/autodl-tmp/scgm/scgm_split_2D_mask/Labeled/vendorA/' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/mask/Labeled/vendorA/'
+LabeledVendorA_data_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_data/Labeled/vendorA/' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/data/Labeled/vendorA/'
+LabeledVendorA_mask_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_mask/Labeled/vendorA/' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/mask/Labeled/vendorA/'
 
-LabeledVendorB_data_dir = '/root/autodl-tmp/scgm/scgm_split_2D_data/Labeled/vendorB/' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/data/Labeled/vendorB/'
-LabeledVendorB_mask_dir = '/root/autodl-tmp/scgm/scgm_split_2D_mask/Labeled/vendorB/' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/mask/Labeled/vendorB/'
+LabeledVendorB_data_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_data/Labeled/vendorB/' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/data/Labeled/vendorB/'
+LabeledVendorB_mask_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_mask/Labeled/vendorB/' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/mask/Labeled/vendorB/'
 
-LabeledVendorC_data_dir = '/root/autodl-tmp/scgm/scgm_split_2D_data/Labeled/vendorC/' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/data/Labeled/vendorC/'
-LabeledVendorC_mask_dir = '/root/autodl-tmp/scgm/scgm_split_2D_mask/Labeled/vendorC/' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/mask/Labeled/vendorC/'
+LabeledVendorC_data_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_data/Labeled/vendorC/' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/data/Labeled/vendorC/'
+LabeledVendorC_mask_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_mask/Labeled/vendorC/' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/mask/Labeled/vendorC/'
 
-LabeledVendorD_data_dir = '/root/autodl-tmp/scgm/scgm_split_2D_data/Labeled/vendorD/' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/data/Labeled/vendorD/'
-LabeledVendorD_mask_dir = '/root/autodl-tmp/scgm/scgm_split_2D_mask/Labeled/vendorD' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/mask/Labeled/vendorD/'
+LabeledVendorD_data_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_data/Labeled/vendorD/' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/data/Labeled/vendorD/'
+LabeledVendorD_mask_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_mask/Labeled/vendorD' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/mask/Labeled/vendorD/'
 
-UnlabeledVendorA_data_dir = '/root/autodl-tmp/scgm/scgm_split_2D_data/Unlabeled/vendorA' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/data/Unlabeled/vendorA/'
-UnlabeledVendorB_data_dir = '/root/autodl-tmp/scgm/scgm_split_2D_data/Unlabeled/vendorB' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/data/Unlabeled/vendorB/'
-UnlabeledVendorC_data_dir = '/root/autodl-tmp/scgm/scgm_split_2D_data/Unlabeled/vendorC' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/data/Unlabeled/vendorC/'
-UnlabeledVendorD_data_dir = '/root/autodl-tmp/scgm/scgm_split_2D_data/Unlabeled/vendorD' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/data/Unlabeled/vendorD/'
+UnlabeledVendorA_data_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_data/Unlabeled/vendorA' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/data/Unlabeled/vendorA/'
+UnlabeledVendorB_data_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_data/Unlabeled/vendorB' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/data/Unlabeled/vendorB/'
+UnlabeledVendorC_data_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_data/Unlabeled/vendorC' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/data/Unlabeled/vendorC/'
+UnlabeledVendorD_data_dir = '/root/autodl-tmp/exps_on_SCGM/data/scgm/scgm_split_2D_data/Unlabeled/vendorD' #!!!'/home/hyaoad/remote/semi_medical/scgm_split_2D/data/Unlabeled/vendorD/'
 
 Labeled_data_dir = [LabeledVendorA_data_dir, LabeledVendorB_data_dir, LabeledVendorC_data_dir, LabeledVendorD_data_dir]
 Labeled_mask_dir = [LabeledVendorA_mask_dir, LabeledVendorB_mask_dir, LabeledVendorC_mask_dir, LabeledVendorD_mask_dir]
@@ -83,19 +83,21 @@ def fourier_augmentation(img, tar_img, mode, alpha):
 
     return aug_img, aug_tar_img
 
-def get_meta_split_data_loaders(test_vendor='D'):
-    random.seed(14)
+#!!!def get_meta_split_data_loaders(test_vendor='D'):
+def get_meta_split_data_loaders(test_vendor='D',config=None):
+    #!!!random.seed(14)
 
     domain_1_labeled_dataset, domain_2_labeled_dataset, domain_3_labeled_dataset, \
     domain_1_unlabeled_dataset, domain_2_unlabeled_dataset, domain_3_unlabeled_dataset, \
     test_dataset = \
-        get_data_loader_folder(Labeled_data_dir, Labeled_mask_dir, test_num=test_vendor)
+        get_data_loader_folder(Labeled_data_dir, Labeled_mask_dir, test_num=test_vendor, config=config)
 
     return  domain_1_labeled_dataset, domain_2_labeled_dataset, domain_3_labeled_dataset, \
             domain_1_unlabeled_dataset, domain_2_unlabeled_dataset, domain_3_unlabeled_dataset, \
             test_dataset 
 
-def get_data_loader_folder(data_folders, mask_folders, test_num='D'):
+#!!!def get_data_loader_folder(data_folders, mask_folders, test_num='D'):
+def get_data_loader_folder(data_folders, mask_folders, test_num='D', config=None):
     if test_num=='A':
         domain_1_img_dirs = data_folders[1]
         domain_1_mask_dirs = mask_folders[1]
@@ -152,24 +154,25 @@ def get_data_loader_folder(data_folders, mask_folders, test_num='D'):
         print('Wrong test vendor!')
 
     print("loading labeled dateset")
-    domain_1_labeled_dataset = ImageFolder(domain_1_img_dirs, domain_1_mask_dirs, fourier_dir=fourier_dirs , label=True, train=True)
-    domain_2_labeled_dataset = ImageFolder(domain_2_img_dirs, domain_2_mask_dirs, fourier_dir=fourier_dirs , label=True, train=True)
-    domain_3_labeled_dataset = ImageFolder(domain_3_img_dirs, domain_3_mask_dirs, fourier_dir=fourier_dirs , label=True, train=True)
+    domain_1_labeled_dataset = ImageFolder(domain_1_img_dirs, domain_1_mask_dirs, fourier_dir=fourier_dirs , label=True, train=True, config=config)
+    domain_2_labeled_dataset = ImageFolder(domain_2_img_dirs, domain_2_mask_dirs, fourier_dir=fourier_dirs , label=True, train=True, config=config)
+    domain_3_labeled_dataset = ImageFolder(domain_3_img_dirs, domain_3_mask_dirs, fourier_dir=fourier_dirs , label=True, train=True, config=config)
 
     print("loading unlabeled dateset")
-    domain_1_unlabeled_dataset = ImageFolder(domain_1_img_dirs, domain_1_mask_dirs, fourier_dir=fourier_dirs, label=False, train=True)
-    domain_2_unlabeled_dataset = ImageFolder(domain_2_img_dirs, domain_2_mask_dirs, fourier_dir=fourier_dirs, label=False, train=True)
-    domain_3_unlabeled_dataset = ImageFolder(domain_3_img_dirs, domain_3_mask_dirs, fourier_dir=fourier_dirs, label=False, train=True)
+    domain_1_unlabeled_dataset = ImageFolder(domain_1_img_dirs, domain_1_mask_dirs, fourier_dir=fourier_dirs, label=False, train=True, config=config)
+    domain_2_unlabeled_dataset = ImageFolder(domain_2_img_dirs, domain_2_mask_dirs, fourier_dir=fourier_dirs, label=False, train=True, config=config)
+    domain_3_unlabeled_dataset = ImageFolder(domain_3_img_dirs, domain_3_mask_dirs, fourier_dir=fourier_dirs, label=False, train=True, config=config)
 
     print("loading test dateset")
-    test_dataset = ImageFolder(test_data_dirs, test_mask_dirs, fourier_dir=fourier_dirs, label=True, train=False)
+    test_dataset = ImageFolder(test_data_dirs, test_mask_dirs, fourier_dir=fourier_dirs, label=True, train=False, config=config)
 
     return domain_1_labeled_dataset, domain_2_labeled_dataset, domain_3_labeled_dataset, \
            domain_1_unlabeled_dataset, domain_2_unlabeled_dataset, domain_3_unlabeled_dataset, \
            test_dataset
 
 class ImageFolder(data.Dataset):
-    def __init__(self, data_dir, mask_dir, fourier_dir=None, train=True, label=True, loader=default_loader):
+    #!!!def __init__(self, data_dir, mask_dir, fourier_dir=None, train=True, label=True, loader=default_loader):
+    def __init__(self, data_dir, mask_dir, fourier_dir=None, train=True, label=True, loader=default_loader, config=None):
 
         print("data_dirs", data_dir)
         # print("mask_dirs", mask_dir)
@@ -214,8 +217,8 @@ class ImageFolder(data.Dataset):
 
         print("length of imgs",len(self.imgs))
 
-        self.Fourier_aug = default_config['Fourier_aug']
-        self.fourier_mode = default_config['fourier_mode']
+        self.Fourier_aug = config['Fourier_aug'] #!!!default_config['Fourier_aug']
+        self.fourier_mode = config['fourier_mode'] #!!!default_config['fourier_mode']
         self.alpha = 0.3
 
     def __getitem__(self, index):

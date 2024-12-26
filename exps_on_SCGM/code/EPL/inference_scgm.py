@@ -18,18 +18,19 @@ import torchvision.models as models
 from networks.scgm_network import my_net
 from utils.utils import get_device, check_accuracy, dice_loss, im_convert, label_to_onehot
 from scgm_dataloader import get_meta_split_data_loaders
-#!!!from config import default_config
+from config_scgm_loadaugbaseline_1gpu_A import default_config #!!!from config import default_config
 from utils.data_utils import save_image
 from utils.dice_loss import dice_coeff
 #!!!from draw_dataloader import OneImageFolder
 
 device = 'cuda'
+config = default_config
 
 def pre_data(batch_size, num_workers, test_vendor):
     test_vendor = test_vendor
 
     _, _, _, _, _, _, test_dataset = get_meta_split_data_loaders(
-            test_vendor=test_vendor)
+            test_vendor=test_vendor,config=config)
     
     test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, num_workers=num_workers,
                              shuffle=False, drop_last=True, pin_memory=False)
@@ -159,13 +160,13 @@ def inference_dual(model_path_l, model_path_r, test_loader):
 def main():
     batch_size = 1
     num_workers = 4
-    test_vendor = 'C' #!!!'D'
+    test_vendor = 'A' #!!!'D'
 
     '''
     model_path_l = './tmodel/l_2%_'+str(test_vendor)+'.pt'
     model_path_r = './tmodel/r_2%_'+str(test_vendor)+'.pt'
     '''
-    modeltype = 'default_loadaugbaseline_A/lr0.0001'
+    modeltype = 'default_loadaugbaseline_A/'
     saveimg = False
     savedirs= './tmodel_scgm/{}'.format(modeltype) #default_1gpu_4090' #default_nofft_nostrongaug_1gpu' #!!'tmodel_scgm_4gpu/default' #'./tmodel_scgm/cda_imgcut_l2u0_u02l_feamixup_fixmixlambda0.5_lossmix_lessepoch_B' #_fixmixlambda0.5_lossmix_lessmixlossw_otherw3_mixlossw1_4gpu_4090'
     ratio=0.2
@@ -186,7 +187,8 @@ def main():
     # one_image_loader = DataLoader(dataset=one_image_data, batch_size=1, shuffle=False, drop_last=True, pin_memory=True)
 
     # draw_img(model_path_l, model_path_r, test_loader, test_vendor)
-    draw_many_img(model_path_l, model_path_r, test_loader, modeltype, saveimg)
+    if saveimg:
+        draw_many_img(model_path_l, model_path_r, test_loader, modeltype, saveimg)
     inference_dual(model_path_l, model_path_r, test_loader)
 
 if __name__ == '__main__':

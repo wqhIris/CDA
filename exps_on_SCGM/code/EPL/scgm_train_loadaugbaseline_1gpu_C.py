@@ -27,6 +27,9 @@ from utils.custom_collate import SegCollate
 import pickle
 #!!!
 
+from utils.fixseed import set_random_seed
+set_random_seed(14)
+
 gpus = default_config['gpus']
 torch.cuda.set_device('cuda:{}'.format(gpus[0]))
 
@@ -40,61 +43,10 @@ device = get_device()
 def pre_data(batch_size, num_workers, test_vendor):
     test_vendor = test_vendor
     
-    #!!!
-    save_dirs = 'scgm_data/{}'.format(test_vendor)
-    if not os.path.exists(save_dirs):
-        os.makedirs(save_dirs)
-    
-    save_label_path = '{}/data_l.pkl'.format(save_dirs)
-    save_unlabel_path = '{}/data_u.pkl'.format(save_dirs)
-    save_val_path = '{}/data_val.pkl'.format(save_dirs)
-    save_test_path = '{}/data_test.pkl'.format(save_dirs)
-    
-    if (os.path.exists(save_label_path) and os.path.exists(save_unlabel_path) and os.path.exists(save_val_path) and os.path.exists(save_test_path)):
-        with open(save_label_path, 'rb') as f:
-            label_dataset = pickle.load(f)
-        with open(save_unlabel_path, 'rb') as f:
-            unlabel_dataset = pickle.load(f)
-        with open(save_val_path, 'rb') as f:
-            val_dataset = pickle.load(f)
-        with open(save_test_path, 'rb') as f:
-            test_dataset =pickle.load(f)
-    else:
-        domain_1_labeled_dataset, domain_2_labeled_dataset, domain_3_labeled_dataset, \
-            domain_1_unlabeled_dataset, domain_2_unlabeled_dataset, domain_3_unlabeled_dataset, \
-            test_dataset = get_meta_split_data_loaders(test_vendor=test_vendor)
-
-        val_dataset = ConcatDataset(
-            [domain_1_labeled_dataset, domain_2_labeled_dataset, domain_3_labeled_dataset])
-
-        label_dataset = ConcatDataset(
-            [domain_1_labeled_dataset, domain_2_labeled_dataset, domain_3_labeled_dataset])
-
-        unlabel_dataset = ConcatDataset(
-            [domain_1_unlabeled_dataset, domain_2_unlabeled_dataset, domain_3_unlabeled_dataset])
-        # unlabel_dataset = domain_2_unlabeled_dataset
-
-        print("before length of label_dataset", len(label_dataset))
-
-        new_labeldata_num = len(unlabel_dataset) // len(label_dataset) + 1
-        new_label_dataset = label_dataset
-        for i in range(new_labeldata_num):
-            new_label_dataset = ConcatDataset([new_label_dataset, label_dataset])
-        label_dataset = new_label_dataset
-        
-        with open(save_label_path, 'wb') as f:
-            pickle.dump(label_dataset, f)
-        with open(save_unlabel_path, 'wb') as f:
-            pickle.dump(unlabel_dataset, f)
-        with open(save_val_path, 'wb') as f:
-            pickle.dump(val_dataset, f)
-        with open(save_test_path, 'wb') as f:
-            pickle.dump(test_dataset, f)
-    '''
     domain_1_labeled_dataset, domain_2_labeled_dataset, domain_3_labeled_dataset, \
         domain_1_unlabeled_dataset, domain_2_unlabeled_dataset, domain_3_unlabeled_dataset, \
         test_dataset = get_meta_split_data_loaders(
-            test_vendor=test_vendor)
+            test_vendor=test_vendor, config=config)
 
     val_dataset = ConcatDataset(
         [domain_1_labeled_dataset, domain_2_labeled_dataset, domain_3_labeled_dataset])
@@ -113,7 +65,6 @@ def pre_data(batch_size, num_workers, test_vendor):
     for i in range(new_labeldata_num):
         new_label_dataset = ConcatDataset([new_label_dataset, label_dataset])
     label_dataset = new_label_dataset
-    '''
     
 
     # For CutMix

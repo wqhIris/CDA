@@ -19,15 +19,14 @@ import torchvision.models as models
 #!!!from network.scgm_network import my_net
 from util.utils import get_device, dice_loss, im_convert, label_to_onehot
 from scgm_dataloader import get_meta_split_data_loaders
-#!!!from config import default_config
+from config_scgm_deeplabv3_epldiceloss_A import default_config #!!!from config import default_config
 from util.data_utils import save_image
 from util.dice_loss import dice_coeff
-from config_scgm_B import default_config
 #!!!from draw_dataloader import OneImageFolder
 
 
 from utils.fixseed import set_random_seed
-set_random_seed(42)
+set_random_seed(14)
 
 device = 'cuda'
 config = default_config
@@ -208,24 +207,19 @@ def cal_dice_perimg(model, domain):
 def main():
     batch_size = 1
     num_workers = 4
-    test_vendor = 'C' #!!!'D'
+    test_vendor = 'A' #!!!'D'
 
     '''
     model_path_l = './tmodel/l_2%_'+str(test_vendor)+'.pt'
     model_path_r = './tmodel/r_2%_'+str(test_vendor)+'.pt'
     '''
-    modeltype = '1gpu/cutmixl2u_instancecpl2u_feamixl2u_deeplabv3_epldiceloss_savebestema_loadselftrainparam_C/v2_nousepseudoloss_lr0.01wdecay0.01_alpha0.4_ema0.9_seed14'
-    #!!!cutmixl2u_instancecpl2u_feamixl2u_deeplabv3_epldiceloss_savebestema_loadselftrainparam_A/nousepseudoloss_alpha0.4_ema0.9_seed14/test1'
-    #!!!nostrongaug_deeplabv3_epldiceloss_savebestema_loadselftrainparam/lr0.001ep50b8wdecay0.01ema0.7/'
-    #!!!ADMT_addCDA_deeplabv3_epldiceloss_savebestema_loadselftrainparam_B/'
-    #!!!ADMT_deeplabv3_epldiceloss_savebestema_loadselftrainparam_B/lr0.001ep50b8wdecay0.001'
-#!!!Mutual_deeplabv3_epldiceloss_savebestema_loadselftrainparam_B' #!!!nostrongaug_mixstyle_deeplabv3_epldiceloss_savebestema_loadselftrainparam_B'
-#!!!cutmixl2u_instancecpl2u_feamixl2u_deeplabv3_epldiceloss_savebestema_loadselftrainparam_A/nousepseudoloss_alpha0.4_ema0.9/'
+    modeltype = '1gpu/cutmixl2u_instancecpl2u_feamixl2u_deeplabv3_epldiceloss_savebestema_loadselftrainparam_A/nousepseudoloss_lr0.01wdecay0.01_alpha0.4_ema0.9_seed14'
+    #!!!baseline_instance_deeplabv3_epldiceloss_savebestema_counttime_B/'
+    
     saveimg = False #False #True
     savedirs= './tmodel_scgm/{}'.format(modeltype)
-#cutmixl2u_instancecpl2u_feamixl2u_deeplabv3_epldiceloss_savebestema_loadselftrainparam_A/' #cutmixl2u_instancecpl2u_deeplabv3_epldiceloss_savebestema_loadselftrainparam_A/' #cutmixl2u_instancecpl2u_feamixl2u_deeplabv3_epldiceloss_savebestema_loadselftrainparam/' #instancecp_deeplabv3_epldiceloss_savebestema_loadselftrainparam_u2l/' #instancecp_deeplabv3_epldiceloss_savebestema_loadselftrainparam' #baseline_cutmix_deeplabv3_epldiceloss_savebestema' #cutmix_deeplabv3_epldiceloss_savebestema_loadselftrainparam' #baseline_deeplabv3_epldiceloss/loadresnetparam' #baseline_instance_deeplabv3_epldiceloss_savebestema/lr0.001_noloadresnetparam_changecopypastev2_changeconstrast_randomrotatepaste_test2' #baseline_instance_deeplabv3_epldiceloss_savebestema_onedomain' #baseline_instance_deeplabv3_epldiceloss_savebestema'#nostrongaug_deeplabv3_epldiceloss_savebestema' #!!'tmodel_scgm_4gpu/default' #'./tmodel_scgm/cda_imgcut_l2u0_u02l_feamixup_fixmixlambda0.5_lossmix_lessepoch_B' #_fixmixlambda0.5_lossmix_lessmixlossw_otherw3_mixlossw1_4gpu_4090'
     ratio=0.2
-    if 'baseline' in modeltype:
+    if 'baseline' in modeltype and 'instance' not in modeltype:
         model_path_l = '{}/SCGM_fixmatch_ratio{}_{}_CM.pt'.format(savedirs,ratio,test_vendor)
     else:
         model_path_l = '{}/stu_SCGM_fixmatch_ratio{}_{}_CM.pt'.format(savedirs,ratio,test_vendor)

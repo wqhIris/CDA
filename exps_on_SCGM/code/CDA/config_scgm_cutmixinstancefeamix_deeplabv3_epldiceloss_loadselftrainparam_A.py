@@ -18,7 +18,7 @@ default_config = dict(
     ifFast = False,
     Pretrain =False,
     Loadselftrain = True,
-    pretrain_file = '/root/autodl-fs/EPL_usecovidnetwork/tmodel_scgm/1gpu/baseline_instance_deeplabv3_epldiceloss_savebestema_A/stu_SCGM_fixmatch_ratio0.2_A_CM.pt', #'',#'resnet50_v1c.pth', #!!!'/home/hyaoad/remote/semi_medical/MNMS_seg/pretrain_res/resnet50_v1c.pth',
+    pretrain_file = '/root/autodl-fs/exps_on_SCGM/CDA/tmodel_scgm/1gpu/baseline_instance_deeplabv3_epldiceloss_savebestema_A/stu_SCGM_fixmatch_ratio0.2_A_CM.pt', #'',#'resnet50_v1c.pth', #!!!'/home/hyaoad/remote/semi_medical/MNMS_seg/pretrain_res/resnet50_v1c.pth',
 
     
     #!!!-----------------------好像用不上

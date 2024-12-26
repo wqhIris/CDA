@@ -18,18 +18,19 @@ import torchvision.models as models
 from networks.scgm_network import my_net
 from utils.utils import get_device, check_accuracy, dice_loss, im_convert, label_to_onehot
 from scgm_dataloader import get_meta_split_data_loaders
-#!!!from config import default_config
+from config_scgm_loadaugbaseline_1gpu_A import default_config #!!!from config import default_config
 from utils.data_utils import save_image
 from utils.dice_loss import dice_coeff
 #!!!from draw_dataloader import OneImageFolder
 
 device = 'cuda'
+config = default_config
 
 def pre_data(batch_size, num_workers, test_vendor):
     test_vendor = test_vendor
 
     _, _, _, _, _, _, test_dataset = get_meta_split_data_loaders(
-            test_vendor=test_vendor)
+            test_vendor=test_vendor,config=config)
     
     test_loader = DataLoader(dataset=test_dataset, batch_size=batch_size, num_workers=num_workers,
                              shuffle=False, drop_last=True, pin_memory=False)
@@ -170,7 +171,7 @@ def main():
     savedirs= './tmodel_scgm/{}'
     ratio=0.2   
     
-    modeltype = 'default_loadaugbaseline_{}/lr0.0001'
+    modeltype = 'default_loadaugbaseline_{}/'
     model_path_l = '{}/l_SCGM_deeplab_ratio{}_{}_CM.pt'
     model_path_r = '{}/r_SCGM_deeplab_ratio{}_{}_CM.pt'
     
@@ -188,7 +189,7 @@ def main():
     
     #!!!B
     test_vender_B = 'B'
-    modeltype_B = 'default_loadaugbaseline/lr0.0001'
+    modeltype_B = modeltype.format(test_vender_B)
     savedirs_B = savedirs.format(modeltype_B)
     model_path_l_B = model_path_l.format(savedirs_B,ratio,test_vender_B)
     model_path_r_B = model_path_r.format(savedirs_B,ratio,test_vender_B)
