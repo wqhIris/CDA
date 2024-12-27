@@ -129,12 +129,21 @@ Medical image semantic segmentation is a fundamental yet challenging research ta
       ```
   - For other models such as `Baseline` and `BCP`, please refer to [exps_on_COVID-19-20/code/main.sh](exps_on_COVID-19-20/code/main.sh). `exps_on_COVID-19-20/code/train_baseline.py` and `exps_on_COVID-19-20/code/train_BCP.py` are the implementation of corresponding models.
       
-    
-    - For experiments on SCGM
-      - To train our `CDA` with same , please refer to the bash scripts in `exps_on_SCGM/code/CDA`
+- For experiments on SCGM
+      - To train our `CDA` using 20% labeled data in three domains, please refer to the scrips in `exps_on_SCGM/code/CDA`.
+      - There are three steps:
+        - **Step 1: Modify the paths of the dataset**. You can change the dirs (lines 27 to 42) in [exps_on_SCGM/code/CDA/scgm_dataloader.py](exps_on_SCGM/code/CDA/scgm_dataloader.py).
+        - **Step 2: Pre-train merely using labeled data augmented by copy-paste**. The main interface is implemented in `exps_on_SCGM/code/CDA/train_baseline_instancecp_deeplabv3_epldiceloss_savebestema_xxx.sh`, and you can change the path to save a log file in this script.
+          - The config information is defined in `exps_on_SCGM/code/CDA/config_scgm_deeplabv3_epldiceloss_A.py`,
+          - The locations to save model weights and a tensorboard file are defined in `exps_on_SCGM/code/CDA/train_baseline_instancecp_deeplabv3_epldiceloss_savebestema_xxx.py`.
+        - **Step 3: train CDA initialized by pre-trained paramters in a domain-generalized semi-supervised segmentation setting**. The main interface is implemented in `exps_on_SCGM/code/CDA/train_CDA_cutmixl2u_instancecpl2u_feamixl2u_deeplabv3_epldiceloss_savebestema_loadselftrainparam_xxx.sh`, and find the config information is defined  in `config_scgm_cutmixinstancefeamix_deeplabv3_epldiceloss_loadselftrainparam_A.py`. 
+  - Below we provide an example for training `CDA` with `20%` labeled ratio in domains B, C, D, and inferencing in domain A.
+
       ```bash
-      train_baseline_instancecp_deeplabv3_epldiceloss_savebestema_A.sh
+      # Step 2
+      sh train_baseline_instancecp_deeplabv3_epldiceloss_savebestema_A.sh
       
+      # Step 3
       train_CDA_cutmixl2u_instancecpl2u_feamixl2u_deeplabv3_epldiceloss_savebestema_loadselftrainparam_A.sh
       ```
 
