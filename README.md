@@ -62,7 +62,7 @@ Medical image semantic segmentation is a fundamental yet challenging research ta
 - SCGM
   - We followed the settings of [EPL](https://github.com/XMed-Lab/EPL_SemiDG) and the original dataset can be downloaded from the [official website](http://niftyweb.cs.ucl.ac.uk/challenge/index.php).
   - Extract the training and testing data to `$ROOT/exps_on_SCGM/data/scgm_rawdata/train` and `$ROOT/exps_on_SCGM/data/scgm_rawdata/test`, respectively.
-  - You need first to change the dirs (lines 32 to 53) in the scripts [exps_on_SCGM/data/preprocess/save_SCGM_2D.py](exps_on_SCGM/data/preprocess/save_SCGM_2D.py), and then run `save_SCGM_2D.py` to split the original dataset into labeled and unlabeled sets in four domains.
+  - You need first to change the dirs (lines 31 to 52) in the scripts [exps_on_SCGM/data/preprocess/save_SCGM_2D.py](exps_on_SCGM/data/preprocess/save_SCGM_2D.py), and then run `save_SCGM_2D.py` to split the original dataset into labeled and unlabeled sets in four domains.
   - The directory structure should look like as follows:
     
     ```bash
