@@ -84,7 +84,7 @@ Medical image semantic segmentation is a fundamental yet challenging research ta
 # How to run
 ## 1. Training
 - For experiments on COVID-19-20
-  - To train our `CDA` with different labeled ratios, please refer to lines 22 to 42 in the bash script [exps_on_COVID-19-20/code/main.sh](exps_on_COVID-19-20/code/main.sh).
+  - To train our `CDA` with different labeled ratios, please refer to lines 22 to 35 in the bash script [exps_on_COVID-19-20/code/main.sh](exps_on_COVID-19-20/code/main.sh).
   - There are 3 steps:
     - **Step 1: Extract tumor images and masks**. The main interface is implemented in `exps_on_COVID-19-20/code/extract_tumors.py`. You need to modify the paths (`data_root`, `file_path`, `save_dir`) in the script for different labeled ratios. We suggest putting all data under the same folder (`$ROOT/exps_on_COVID-19-20/data/COVID249/`); 
     - **Step 2: Pre-train merely using labeled data augmented by tumor copy-paste**. The main interface is implemented in `exps_on_COVID-19-20/code/train_baseline_tumorcptransV2.py`;
@@ -93,8 +93,8 @@ Medical image semantic segmentation is a fundamental yet challenging research ta
     - `--root_path` and `--exp` define the location to save model weights, along with a log file and a tensorboard file.
     - `--tumor_dir` denotes the location where tumor data generated in Step 1 are put.
     - `--dataroot_path` denotes the location where datasets are put.
-    - `--reload_path` denotes the location where pre-trained parameter learned in Step 2 are saved.
-    - `--excel_file_name_label` denote the split for labeled data, and `--excel_file_name_unlabel` denote the split for unlabeled data.
+    - `--reload_path` denotes the location where pre-trained parameters learned in Step 2 are saved.
+    - `--excel_file_name_label` denotes the split for labeled data, and `--excel_file_name_unlabel` denotes the split for unlabeled data.
     - `--model` defines the type of model's framework.
     - `--labeled_per` denotes labeled ratio.
       
@@ -130,56 +130,66 @@ Medical image semantic segmentation is a fundamental yet challenging research ta
   - For other models such as `Baseline` and `BCP`, please refer to [exps_on_COVID-19-20/code/main.sh](exps_on_COVID-19-20/code/main.sh). `exps_on_COVID-19-20/code/train_baseline.py` and `exps_on_COVID-19-20/code/train_BCP.py` are the implementation of corresponding models.
       
 - For experiments on SCGM
-      - To train our `CDA` using 20% labeled data in three domains, please refer to the scrips in `exps_on_SCGM/code/CDA`.
-      - There are three steps:
-        - **Step 1: Modify the paths of the dataset**. You can change the dirs (lines 27 to 42) in [exps_on_SCGM/code/CDA/scgm_dataloader.py](exps_on_SCGM/code/CDA/scgm_dataloader.py).
-        - **Step 2: Pre-train merely using labeled data augmented by copy-paste**. The main interface is implemented in `exps_on_SCGM/code/CDA/train_baseline_instancecp_deeplabv3_epldiceloss_savebestema_xxx.sh`, and you can change the path to save a log file in this script.
-          - The config information is defined in `exps_on_SCGM/code/CDA/config_scgm_deeplabv3_epldiceloss_A.py`,
-          - The locations to save model weights and a tensorboard file are defined in `exps_on_SCGM/code/CDA/train_baseline_instancecp_deeplabv3_epldiceloss_savebestema_xxx.py`.
-        - **Step 3: train CDA initialized by pre-trained paramters in a domain-generalized semi-supervised segmentation setting**. The main interface is implemented in `exps_on_SCGM/code/CDA/train_CDA_cutmixl2u_instancecpl2u_feamixl2u_deeplabv3_epldiceloss_savebestema_loadselftrainparam_xxx.sh`, and find the config information is defined  in `config_scgm_cutmixinstancefeamix_deeplabv3_epldiceloss_loadselftrainparam_A.py`. 
-  - Below we provide an example for training `CDA` with `20%` labeled ratio in domains B, C, D, and inferencing in domain A.
+  - To train our `CDA` using 20% labeled data in three domains, please refer to the scrips in `exps_on_SCGM/code/CDA`.
+  - There are three steps:
+    - **Step 1: Modify the paths of the dataset**. You can change the dirs (lines 27 to 42) in [scgm_dataloader.py](exps_on_SCGM/code/CDA/scgm_dataloader.py).
+    - **Step 2: Pre-train merely using labeled data augmented by copy-paste**. The main interface is implemented in `train_baseline_instancecp_deeplabv3_epldiceloss_savebestema_xxx.sh`, and you can change the path to save a log file in this script.
+      - The config information is defined in `config_scgm_deeplabv3_epldiceloss_xxx.py`,
+      - The locations to save model weights and a tensorboard file are defined in `train_baseline_instancecp_deeplabv3_epldiceloss_savebestema_xxx.py`.
+    - **Step 3: train CDA initialized by pre-trained paramters in a domain-generalized semi-supervised segmentation setting**. The main interface is implemented in `train_CDA_cutmixl2u_instancecpl2u_feamixl2u_deeplabv3_epldiceloss_savebestema_loadselftrainparam_xxx.sh`, and the config information is defined in `config_scgm_cutmixinstancefeamix_deeplabv3_epldiceloss_loadselftrainparam_xxx.py`. 
+  - Below we provide an example for training `CDA` using data in domains B, C, D, and inferencing in domain A.
 
       ```bash
       # Step 2
       sh train_baseline_instancecp_deeplabv3_epldiceloss_savebestema_A.sh
       
       # Step 3
-      train_CDA_cutmixl2u_instancecpl2u_feamixl2u_deeplabv3_epldiceloss_savebestema_loadselftrainparam_A.sh
+      sh train_CDA_cutmixl2u_instancecpl2u_feamixl2u_deeplabv3_epldiceloss_savebestema_loadselftrainparam_A.sh
       ```
 
-  - To train the `EPL` with 20% labeled ratios in four domains, please refer to the bash scripts in `exps_on_SCGM/code/EPL`
-    
-    ```bash
-    sh scgm_train_loadaugbaseline_1gpu_A.sh 
-    ```
+  - For training the `EPL`, please refer to the bash scripts in `exps_on_SCGM/code/EPL`, and the config information is defined in `config_scgm_loadaugbaseline_1gpu_xxx.py`.
 
 ## 2. Testing
 - For experiments on COVID-19-20
-  - To run the evaluation code, please refer to [exps_on_COVID-19-20/code/main.sh](exps_on_COVID-19-20/code/main.sh)
-  ```bash
-  CUDA_VISIBLE_DEVICES=0 python test.py \
-  --root_path /root/autodl-fs/CDA/exps_on_COVID-19-20/test \
-  --model_path /root/autodl-fs/CDA/exps_on_COVID-19-20/exp/COVID249/exp_CDA_0.1_unet_imgcut_feaaugmixup/model_best.pth \
-  --dataroot_path /root/autodl-fs/CDA/exps_on_COVID-19-20/ \
-  --exp CDA \
-  --model unet_imgcut_feaaugmixup \
-  --labeled_per 0.1
-  ```
+  - To run the evaluation code, please refer to lines 39 to 41 in the bash script [exps_on_COVID-19-20/code/main.sh](exps_on_COVID-19-20/code/main.sh).
+  - Below we provide an example for testing `CDA` with `10%` labeled ratio.
+    - `--model_path` denotes the location where trained CDA are saved.
+    
+    ```bash
+    CUDA_VISIBLE_DEVICES=0 python test.py \
+    --root_path /root/autodl-fs/CDA/exps_on_COVID-19-20/test/ \
+    --model_path /root/autodl-fs/CDA/exps_on_COVID-19-20/exp/COVID249/exp_CDA_0.1_unet_imgcut_feaaugmixup/model_best.pth \
+    --dataroot_path /root/autodl-fs/CDA/exps_on_COVID-19-20/ \
+    --exp CDA \
+    --model unet_imgcut_feaaugmixup \
+    --labeled_per 0.1
+    ```
+  - For other models such as `Baseline` and `BCP`, you can modify `--model_path`, `--exp`, and `--model`,  more details please refer to [exps_on_COVID-19-20/code/main.sh](exps_on_COVID-19-20/code/main.sh).
 
 - For experiments on SCGM
-  - To evaluate `CDA`
-  ```bash
-  python inference_scgm_onemodel.py
-  
-  python inference_scgm_onemodel_alldomain_avg.py
-  ```
+  - To run the evaluation code, please update the paths of saved model weights at line 216 in `exps_on_SCGM/code/CDA/inference_scgm_onemodel.py`.
+    - if you need to save the predicted masks, please set `saveimg` as True.
+  - Next, run the following script:
+     
+    ```bash
+    python inference_scgm_onemodel.py
+    ```
+    
+  - If you need to calculate the average results of four domains, we provide `exps_on_SCGM/code/CDA/inference_scgm_onemodel_alldomain_avg.py`. The path of saved model trained in different domains need to be modified. Next, run the 
+    
+    ```bash
+    python inference_scgm_onemodel_alldomain_avg.py
+    ```
 
-  - To evaluate `EPL`
-  ```bash
-  python inference_scgm.py
-  
-  python inference_scgm_alldomain_avg.py
-  ```
+  - To evaluate `EPL`, similarly, update the paths of saved model weights in `exps_on_SCGM/code/EPL/inference_scgm.py` or `exps_on_SCGM/code/EPL/inference_scgm_alldomain_avg.py`. Next, run the following scripts:
+     
+    ```bash
+    # Evaluate the performance of a model in a target domain
+    python inference_scgm.py
+    
+    # Evaluate the average performance of model in four target domains
+    python inference_scgm_alldomain_avg.py
+    ```
 
 # Acknowledgement
 This repository is based on the codes and datasets provided by the projects: [SASSL](https://github.com/FeiLyu/SASSL/) and [EPL](https://github.com/XMed-Lab/EPL_SemiDG).
