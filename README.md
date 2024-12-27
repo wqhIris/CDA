@@ -169,19 +169,19 @@ Medical image semantic segmentation is a fundamental yet challenging research ta
 - For experiments on SCGM
   - To run the evaluation code, please update the paths of saved model weights at line 216 in `exps_on_SCGM/code/CDA/inference_scgm_onemodel.py`.
     - if you need to save the predicted masks, please set `saveimg` as True.
-  - Next, run the following script:
+  - Next, run the following command:
      
     ```bash
     python inference_scgm_onemodel.py
     ```
     
-  - If you need to calculate the average results of four domains, we provide `exps_on_SCGM/code/CDA/inference_scgm_onemodel_alldomain_avg.py`. The path of saved model trained in different domains need to be modified. Next, run the 
+  - If you need to calculate the average results of four domains, we provide `exps_on_SCGM/code/CDA/inference_scgm_onemodel_alldomain_avg.py`. The path of saved model trained in different domains need to be modified. Next, run the following command:
     
     ```bash
     python inference_scgm_onemodel_alldomain_avg.py
     ```
 
-  - To evaluate `EPL`, similarly, update the paths of saved model weights in `exps_on_SCGM/code/EPL/inference_scgm.py` or `exps_on_SCGM/code/EPL/inference_scgm_alldomain_avg.py`. Next, run the following scripts:
+  - To evaluate `EPL`, similarly, update the paths of saved model weights in `exps_on_SCGM/code/EPL/inference_scgm.py` or `exps_on_SCGM/code/EPL/inference_scgm_alldomain_avg.py`. Next, run the following commands:
      
     ```bash
     # Evaluate the performance of a model in a target domain
